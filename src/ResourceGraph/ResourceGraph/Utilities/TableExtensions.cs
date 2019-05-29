@@ -14,13 +14,11 @@
 
 namespace Microsoft.Azure.Commands.ResourceGraph.Utilities
 {
+    using Microsoft.WindowsAzure.Governance.ResourcesCache.Client.Models;
+    using Newtonsoft.Json.Linq;
     using System;
     using System.Collections.Generic;
     using System.Management.Automation;
-
-    using Microsoft.Azure.Management.ResourceGraph.Models;
-
-    using Newtonsoft.Json.Linq;
 
     /// <summary>
     /// TableExtensions

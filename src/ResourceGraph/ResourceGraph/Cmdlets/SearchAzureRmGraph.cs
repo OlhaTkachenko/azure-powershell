@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Commands.ResourceGraph.Cmdlets
     using System.Management.Automation;
     using Microsoft.Azure.Commands.Common.Authentication.Abstractions;
     using Microsoft.Azure.Commands.ResourceGraph.Utilities;
-    using Microsoft.Azure.Management.ResourceGraph.Models;
+    using Microsoft.WindowsAzure.Governance.ResourcesCache.Client.Models;
 
     /// <summary>
     /// Search-AzGraph cmdlet
@@ -113,7 +113,8 @@ namespace Microsoft.Azure.Commands.ResourceGraph.Cmdlets
                         .Result
                         .Body;
 
-                    var requestResults = response.Data.ToPsObjects().ToList();
+                    this.WriteObject(response.Data, true);
+                    var requestResults = ((Table)response.Data).ToPsObjects().ToList();
                     results.AddRange(requestResults);
                     this.WriteVerbose($"Received results: {requestResults.Count}");
                 }

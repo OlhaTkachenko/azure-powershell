@@ -9,9 +9,15 @@
   <PropertyGroup>
     <RootNamespace>$(LegacyAssemblyPrefix)$(PsModuleName)</RootNamespace>
   </PropertyGroup>
-
+  
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Management.ResourceGraph" Version="0.10.0-preview" />
+    <Compile Update="Cmdlets\SearchAzureRmGraph.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="ResourceGraphClient\" />
   </ItemGroup>
 
 </Project>

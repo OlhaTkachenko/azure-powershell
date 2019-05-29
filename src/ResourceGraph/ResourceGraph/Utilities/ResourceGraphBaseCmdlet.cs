@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Commands.ResourceGraph.Utilities
     using Microsoft.Azure.Commands.Common.Authentication;
     using Microsoft.Azure.Commands.Common.Authentication.Abstractions;
     using Microsoft.Azure.Commands.ResourceManager.Common;
-    using Microsoft.Azure.Management.ResourceGraph;
+    using Microsoft.WindowsAzure.Governance.ResourcesCache.Client;
 
     /// <summary>
     /// ResourceGraphBaseCmdlet
@@ -28,19 +28,19 @@ namespace Microsoft.Azure.Commands.ResourceGraph.Utilities
         /// <summary>
         /// The resource graph client
         /// </summary>
-        private IResourceGraphClient _resourceGraphClient;
+        private IAzureResourceGraphClient _resourceGraphClient;
 
         /// <summary>
         /// Gets the resource graph client.
         /// </summary>
-        public IResourceGraphClient ResourceGraphClient
+        public IAzureResourceGraphClient ResourceGraphClient
         {
             get
             {
                 if (this._resourceGraphClient == null)
                 {
                     this._resourceGraphClient =
-                        AzureSession.Instance.ClientFactory.CreateArmClient<ResourceGraphClient>(
+                        AzureSession.Instance.ClientFactory.CreateArmClient<AzureResourceGraphClient>(
                             this.DefaultContext, AzureEnvironment.Endpoint.ResourceManager);
                 }
 

@@ -14,10 +14,10 @@
 
 namespace Microsoft.Azure.Commands.ResourceGraph.Utilities
 {
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.ResourceGraph.Models;
     using Microsoft.Rest.Serialization;
+    using Microsoft.WindowsAzure.Governance.ResourcesCache.Client.Models;
     using Newtonsoft.Json;
+    using System.Collections.Generic;
 
     public static class ErrorResponseExceptionExtensions
     {
