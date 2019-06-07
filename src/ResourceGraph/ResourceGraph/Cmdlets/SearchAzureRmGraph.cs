@@ -14,13 +14,13 @@
 
 namespace Microsoft.Azure.Commands.ResourceGraph.Cmdlets
 {
+    using Microsoft.Azure.Commands.Common.Authentication.Abstractions;
+    using Microsoft.Azure.Commands.ResourceGraph.Utilities;
+    using Microsoft.WindowsAzure.Governance.ResourcesCache.Client.Models;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Management.Automation;
-    using Microsoft.Azure.Commands.Common.Authentication.Abstractions;
-    using Microsoft.Azure.Commands.ResourceGraph.Utilities;
-    using Microsoft.WindowsAzure.Governance.ResourcesCache.Client.Models;
 
     /// <summary>
     /// Search-AzGraph cmdlet
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Commands.ResourceGraph.Cmdlets
         /// The rows per page
         /// </summary>
         private const int RowsPerPage = 1000;
-        
+
         /// <summary>
         /// Gets or sets the query.
         /// </summary>s
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Commands.ResourceGraph.Cmdlets
             get;
             set;
         }
-        
+
         /// <summary>
         /// Executes the cmdlet.
         /// </summary>
@@ -105,16 +105,15 @@ namespace Microsoft.Azure.Commands.ResourceGraph.Cmdlets
                     var requestOptions = new QueryRequestOptions(
                         top: requestTop,
                         skip: requestSkip,
-                        skipToken: requestSkipToken);
+                        skipToken: requestSkipToken,
+                        resultFormat: ResultFormat.ObjectArray
+                        );
 
-                    var request = new QueryRequest(subscriptions, this.Query, requestOptions);
-
+                    var request = new QueryRequest(subscriptions, this.Query, options: requestOptions);
                     response = this.ResourceGraphClient.ResourcesWithHttpMessagesAsync(request)
                         .Result
                         .Body;
-
-                    this.WriteObject(response.Data, true);
-                    var requestResults = ((Table)response.Data).ToPsObjects().ToList();
+                    var requestResults = response.Data.ToPsObjects();
                     results.AddRange(requestResults);
                     this.WriteVerbose($"Received results: {requestResults.Count}");
                 }
